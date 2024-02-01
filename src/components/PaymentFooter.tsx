@@ -1,5 +1,5 @@
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {
   BORDERRADIUS,
   COLORS,
@@ -18,6 +18,7 @@ interface PaymentFooterProps {
   buttonPressHandler: any;
   buttonTitle: string;
 }
+
 const PaymentFooter: React.FC<PaymentFooterProps> = ({
   price,
   buttonPressHandler,
@@ -28,22 +29,17 @@ const PaymentFooter: React.FC<PaymentFooterProps> = ({
       <View style={styles.PriceContainer}>
         <Text style={styles.PriceTitle}>Price</Text>
         <Text style={styles.PriceText}>
-          {price.currency}
-          <Text style={styles.Price}>{price.price}</Text>
+          {price.currency} <Text style={styles.Price}>{price.price}</Text>
         </Text>
       </View>
       <TouchableOpacity
         style={styles.PayButton}
-        onPress={() => {
-          buttonPressHandler();
-        }}>
+        onPress={() => buttonPressHandler()}>
         <Text style={styles.ButtonText}>{buttonTitle}</Text>
       </TouchableOpacity>
     </View>
   );
 };
-
-export default PaymentFooter;
 
 const styles = StyleSheet.create({
   PriceFooter: {
@@ -84,3 +80,5 @@ const styles = StyleSheet.create({
     color: COLORS.primaryWhiteHex,
   },
 });
+
+export default PaymentFooter;

@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {BORDERRADIUS, SPACING} from '../theme/theme';
-import CustomIcons from './CustomIcons';
+import CustomIcon from './CustomIcon';
 
 interface BGIconProps {
   name: string;
@@ -13,7 +13,7 @@ interface BGIconProps {
 const BGIcon: React.FC<BGIconProps> = ({name, color, size, BGColor}) => {
   return (
     <View style={[styles.IconBG, {backgroundColor: BGColor}]}>
-      <CustomIcons name={name} color={color} size={size} />
+      <CustomIcon name={name} color={color} size={size} />
     </View>
   );
 };

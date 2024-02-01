@@ -1,6 +1,6 @@
-import LottieView from 'lottie-react-native';
-import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import LottieView from 'lottie-react-native';
 import {COLORS, FONTFAMILY, FONTSIZE} from '../theme/theme';
 
 interface EmptyListAnimationProps {
@@ -21,8 +21,6 @@ const EmptyListAnimation: React.FC<EmptyListAnimationProps> = ({title}) => {
   );
 };
 
-export default EmptyListAnimation;
-
 const styles = StyleSheet.create({
   EmptyCartContainer: {
     flex: 1,
@@ -38,3 +36,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
+export default EmptyListAnimation;

@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {COLORS, FONTFAMILY, FONTSIZE, SPACING} from '../theme/theme';
-import GraientBGIcon from './GraientBGIcon';
+import GradientBGIcon from './GradientBGIcon';
 import ProfilePic from './ProfilePic';
 
 interface HeaderBarProps {
@@ -11,7 +11,7 @@ interface HeaderBarProps {
 const HeaderBar: React.FC<HeaderBarProps> = ({title}) => {
   return (
     <View style={styles.HeaderContainer}>
-      <GraientBGIcon
+      <GradientBGIcon
         name="menu"
         color={COLORS.primaryLightGreyHex}
         size={FONTSIZE.size_16}
@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-
   HeaderText: {
     fontFamily: FONTFAMILY.poppins_semibold,
     fontSize: FONTSIZE.size_20,

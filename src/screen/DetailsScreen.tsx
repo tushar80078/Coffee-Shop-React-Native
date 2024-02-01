@@ -4,9 +4,9 @@ import {
   StatusBar,
   StyleSheet,
   Text,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
   View,
+  TouchableWithoutFeedback,
+  TouchableOpacity,
 } from 'react-native';
 import {useStore} from '../store/store';
 import {
@@ -21,29 +21,27 @@ import PaymentFooter from '../components/PaymentFooter';
 
 const DetailsScreen = ({navigation, route}: any) => {
   const ItemOfIndex = useStore((state: any) =>
-    route.params.type == 'Coffee' ? state.CoffeeList : state.Beanlist,
+    route.params.type == 'Coffee' ? state.CoffeeList : state.BeanList,
   )[route.params.index];
-
   const addToFavoriteList = useStore((state: any) => state.addToFavoriteList);
-  const addToCart = useStore((state: any) => state.addToCart);
-  const calculateCartPrice = useStore((state: any) => state.calculateCartPrice);
-
-  const [fullDesc, setFullDesc] = useState(false);
-  const [price, setPrice] = useState(ItemOfIndex.prices[0]);
-
   const deleteFromFavoriteList = useStore(
     (state: any) => state.deleteFromFavoriteList,
   );
+  const addToCart = useStore((state: any) => state.addToCart);
+  const calculateCartPrice = useStore((state: any) => state.calculateCartPrice);
 
-  const BackHandler = () => {
-    navigation.pop();
-  };
+  const [price, setPrice] = useState(ItemOfIndex.prices[0]);
+  const [fullDesc, setFullDesc] = useState(false);
 
   const ToggleFavourite = (favourite: boolean, type: string, id: string) => {
     favourite ? deleteFromFavoriteList(type, id) : addToFavoriteList(type, id);
   };
 
-  const addToCardHandler = ({
+  const BackHandler = () => {
+    navigation.pop();
+  };
+
+  const addToCarthandler = ({
     id,
     index,
     name,
@@ -83,11 +81,12 @@ const DetailsScreen = ({navigation, route}: any) => {
           special_ingredient={ItemOfIndex.special_ingredient}
           ingredients={ItemOfIndex.ingredients}
           average_rating={ItemOfIndex.average_rating}
-          rating_count={ItemOfIndex.ratings_count}
+          ratings_count={ItemOfIndex.ratings_count}
           roasted={ItemOfIndex.roasted}
           BackHandler={BackHandler}
           ToggleFavourite={ToggleFavourite}
         />
+
         <View style={styles.FooterInfoArea}>
           <Text style={styles.InfoTitle}>Description</Text>
           {fullDesc ? (
@@ -96,7 +95,7 @@ const DetailsScreen = ({navigation, route}: any) => {
                 setFullDesc(prev => !prev);
               }}>
               <Text style={styles.DescriptionText}>
-                {`${ItemOfIndex.description}`}
+                {ItemOfIndex.description}
               </Text>
             </TouchableWithoutFeedback>
           ) : (
@@ -105,7 +104,7 @@ const DetailsScreen = ({navigation, route}: any) => {
                 setFullDesc(prev => !prev);
               }}>
               <Text numberOfLines={3} style={styles.DescriptionText}>
-                {`${ItemOfIndex.description}`}
+                {ItemOfIndex.description}
               </Text>
             </TouchableWithoutFeedback>
           )}
@@ -114,7 +113,9 @@ const DetailsScreen = ({navigation, route}: any) => {
             {ItemOfIndex.prices.map((data: any) => (
               <TouchableOpacity
                 key={data.size}
-                onPress={() => setPrice(data)}
+                onPress={() => {
+                  setPrice(data);
+                }}
                 style={[
                   styles.SizeBox,
                   {
@@ -129,13 +130,13 @@ const DetailsScreen = ({navigation, route}: any) => {
                     styles.SizeText,
                     {
                       fontSize:
-                        ItemOfIndex.type == 'bean'
+                        ItemOfIndex.type == 'Bean'
                           ? FONTSIZE.size_14
                           : FONTSIZE.size_16,
                       color:
                         data.size == price.size
                           ? COLORS.primaryOrangeHex
-                          : COLORS.primaryWhiteHex,
+                          : COLORS.secondaryLightGreyHex,
                     },
                   ]}>
                   {data.size}
@@ -146,8 +147,9 @@ const DetailsScreen = ({navigation, route}: any) => {
         </View>
         <PaymentFooter
           price={price}
+          buttonTitle="Add to Cart"
           buttonPressHandler={() => {
-            addToCardHandler({
+            addToCarthandler({
               id: ItemOfIndex.id,
               index: ItemOfIndex.index,
               name: ItemOfIndex.name,
@@ -158,14 +160,11 @@ const DetailsScreen = ({navigation, route}: any) => {
               price: price,
             });
           }}
-          buttonTitle="Add to Card"
         />
       </ScrollView>
     </View>
   );
 };
-
-export default DetailsScreen;
 
 const styles = StyleSheet.create({
   ScreenContainer: {
@@ -174,8 +173,11 @@ const styles = StyleSheet.create({
   },
   ScrollViewFlex: {
     flexGrow: 1,
+    justifyContent: 'space-between',
   },
-  FooterInfoArea: {padding: SPACING.space_20},
+  FooterInfoArea: {
+    padding: SPACING.space_20,
+  },
   InfoTitle: {
     fontFamily: FONTFAMILY.poppins_semibold,
     fontSize: FONTSIZE.size_16,
@@ -195,9 +197,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     gap: SPACING.space_20,
   },
-  SizeText: {
-    fontFamily: FONTFAMILY.poppins_medium,
-  },
   SizeBox: {
     flex: 1,
     backgroundColor: COLORS.primaryDarkGreyHex,
@@ -207,4 +206,9 @@ const styles = StyleSheet.create({
     borderRadius: BORDERRADIUS.radius_10,
     borderWidth: 2,
   },
+  SizeText: {
+    fontFamily: FONTFAMILY.poppins_medium,
+  },
 });
+
+export default DetailsScreen;
